@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+my $asm_file = $ARGV[0];
+$asm_file =~ /(.*)\.s$/i;
+my $exec_file = $1;
+my $obj_file = $exec_file . '.o';
+if (system("yasm -felf64 -gdwarf2 $asm_file") == 0) {
+    system("ld -o $exec_file $obj_file");
+}
